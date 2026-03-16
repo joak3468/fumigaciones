@@ -7,7 +7,7 @@ import { CheckCircle2 } from "lucide-react";
 
 const features = [
   "Productos autorizados por el Ministerio de Salud y ANMAT",
-  "Baja toxicidad — seguro para personas, niños y mascotas",
+  "Baja toxicidad — con la debida manipulación, no representa riesgo para personas, niños y mascotas",
   "Insumos de laboratorios líderes en sanidad ambiental",
   "Factura oficial en todos los servicios",
   "Visita de evaluación sin cargo",

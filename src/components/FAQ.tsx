@@ -15,11 +15,11 @@ const faqs = [
   },
   {
     q: "¿Tengo un bebé, puedo fumigar?",
-    a: "Sí. Nuestro personal toma todas las medidas de precaución para aplicar los productos fuera del alcance de los niños. Los productos son de baja toxicidad y en las dosis aplicadas no representan riesgo para la salud.",
+    a: "Sí. Nuestro personal toma todas las medidas de precaución para aplicar los productos fuera del alcance de los niños. Con la debida manipulación y respetando los tiempos de permanencia indicados, los productos no representan riesgo para la salud.",
   },
   {
     q: "¿Los productos que se utilizan son tóxicos?",
-    a: "Nuestros productos son de baja toxicidad y están autorizados por el Ministerio de Salud y ANMAT. Las dosis aplicadas no afectan la salud de personas ni mascotas cuando se respetan los tiempos de permanencia indicados.",
+    a: "Nuestros productos son de baja toxicidad y están autorizados por el Ministerio de Salud y ANMAT. Con la debida manipulación y respetando los tiempos de permanencia indicados, las dosis aplicadas no representan riesgo para la salud de personas ni mascotas.",
   },
   {
     q: "¿Posee algún costo la visita para el presupuesto?",

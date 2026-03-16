@@ -10,6 +10,10 @@ export const metadata: Metadata = {
     "Empresa especializada en control, tratamiento y prevención de plagas. Productos autorizados por el Ministerio de Salud y ANMAT. Servicio en Capital Federal y Gran Buenos Aires.",
   keywords:
     "fumigación, control de plagas, desratización, desinsectación, cucarachas, mosquitos, roedores, Capital Federal, Buenos Aires",
+  metadataBase: new URL("https://fumigacionesnorte.com.ar"),
+  alternates: {
+    canonical: "/",
+  },
   icons: {
     icon: "/images/logo-favicon.png",
     shortcut: "/images/logo-favicon.png",
@@ -31,6 +35,13 @@ export const metadata: Metadata = {
         alt: "Fumigaciones Norte",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fumigaciones Norte | Control Integrado de Plagas",
+    description:
+      "Servicios profesionales de control y prevención de plagas. Productos de baja toxicidad autorizados por ANMAT. Capital Federal y Gran Buenos Aires.",
+    images: ["https://fumigacionesnorte.com.ar/images/logo.png"],
   },
 };
 

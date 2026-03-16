@@ -38,7 +38,7 @@ export default function About() {
                 className="w-full h-[420px] object-cover"
               />
             </div>
-            <div className="absolute -bottom-5 -right-4 sm:right-6 bg-green-700 text-white rounded-2xl px-5 py-4 shadow-xl">
+            <div className="absolute -bottom-5 right-4 sm:right-6 bg-green-700 text-white rounded-2xl px-5 py-4 shadow-xl">
               <p className="text-2xl font-bold leading-none">+15</p>
               <p className="text-green-200 text-xs mt-1">años de experiencia</p>
             </div>

@@ -40,7 +40,7 @@ const contactItems: { icon: React.ElementType; label: string; lines: ContactLine
 export default function QuoteForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "ok" | "error">("idle");
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, amount: 0 });
 
   const {
     register,
@@ -75,10 +75,9 @@ export default function QuoteForm() {
     "w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all";
 
   return (
-    <section id="presupuesto" className="py-20 bg-slate-950">
+    <section id="presupuesto" ref={ref} className="py-20 bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          ref={ref}
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
@@ -98,7 +97,7 @@ export default function QuoteForm() {
             initial={{ opacity: 0, x: -20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="lg:col-span-2 space-y-4"
+            className="lg:col-span-2 space-y-4 order-last lg:order-none"
           >
             <p className="text-slate-400 text-sm leading-relaxed mb-6">
               Completá el formulario o comunicate directamente con nosotros.
@@ -180,7 +179,7 @@ export default function QuoteForm() {
             initial={{ opacity: 0, x: 20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="lg:col-span-3 bg-slate-900 border border-slate-800 rounded-3xl p-7"
+            className="lg:col-span-3 bg-slate-900 border border-slate-800 rounded-3xl p-7 order-first lg:order-none"
           >
             {status === "ok" ? (
               <div className="text-center py-12">

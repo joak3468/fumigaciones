@@ -134,13 +134,13 @@ export async function POST(req: NextRequest) {
 </body>
 </html>`;
 
-    await transporter.sendMail({
+    transporter.sendMail({
       from: `"Fumigaciones Norte" <${process.env.MAIL_FROM}>`,
       to: process.env.MAIL_TO,
       replyTo: email,
       subject: `Nueva solicitud de presupuesto — ${nombre}`,
       html,
-    });
+    }).catch(err => console.error("Error sending email:", err));
 
     return NextResponse.json({ ok: true });
   } catch (err) {

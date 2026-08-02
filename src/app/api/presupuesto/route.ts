@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { logAttempt } from "@/lib/spamLog";
 
 const rateStore = new Map<string, { count: number; reset: number }>();
 const RATE_WINDOW = 5 * 60 * 1000;
@@ -37,6 +38,7 @@ export async function POST(req: NextRequest) {
     "unknown";
 
   if (!checkRateLimit(ip)) {
+    logAttempt({ outcome: "blocked_rate_limit", ip });
     return NextResponse.json(
       { error: "Demasiadas solicitudes. Intente en unos minutos." },
       { status: 429 }
@@ -45,9 +47,23 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { nombre, email, telefono, plaga, zona, tipo, comentario } = body;
+    const { nombre, email, telefono, plaga, zona, tipo, comentario, website, ts } = body;
+
+    // honeypot: campo invisible para humanos; si viene completo es un bot.
+    // se responde "ok" igual para no revelarle al bot qué chequeo falló.
+    if (typeof website === "string" && website.trim() !== "") {
+      logAttempt({ outcome: "blocked_honeypot", ip, nombre, email });
+      return NextResponse.json({ ok: true });
+    }
+
+    // time-trap: nadie completa 6 campos en menos de ~2.5s de haber cargado el formulario.
+    if (typeof ts !== "number" || Date.now() - ts < 2500) {
+      logAttempt({ outcome: "blocked_too_fast", ip, nombre, email });
+      return NextResponse.json({ ok: true });
+    }
 
     if (!nombre || !email || !telefono || !plaga || !zona || !tipo) {
+      logAttempt({ outcome: "blocked_invalid", ip, reason: "Faltan campos requeridos" });
       return NextResponse.json({ error: "Faltan campos requeridos" }, { status: 400 });
     }
 
@@ -60,6 +76,7 @@ export async function POST(req: NextRequest) {
       typeof tipo !== "string" ||
       (comentario !== undefined && typeof comentario !== "string")
     ) {
+      logAttempt({ outcome: "blocked_invalid", ip, reason: "Datos inválidos" });
       return NextResponse.json({ error: "Datos inválidos" }, { status: 400 });
     }
 
@@ -71,14 +88,17 @@ export async function POST(req: NextRequest) {
       zona.length > LIMITS.zona ||
       (comentario && comentario.length > LIMITS.comentario)
     ) {
+      logAttempt({ outcome: "blocked_invalid", ip, reason: "Campo supera el largo máximo", nombre, email });
       return NextResponse.json({ error: "Un campo supera el largo máximo permitido" }, { status: 400 });
     }
 
     if (!EMAIL_RE.test(email)) {
+      logAttempt({ outcome: "blocked_invalid", ip, reason: "Email inválido", nombre, email });
       return NextResponse.json({ error: "Email inválido" }, { status: 400 });
     }
 
     if (!(TIPO_VALUES as readonly string[]).includes(tipo)) {
+      logAttempt({ outcome: "blocked_invalid", ip, reason: "Tipo de espacio inválido", nombre, email });
       return NextResponse.json({ error: "Tipo de espacio inválido" }, { status: 400 });
     }
 
@@ -141,6 +161,8 @@ export async function POST(req: NextRequest) {
       subject: `Nueva solicitud de presupuesto — ${nombre}`,
       html,
     }).catch(err => console.error("Error sending email:", err));
+
+    logAttempt({ outcome: "sent", ip, nombre, email, tipo, zona });
 
     return NextResponse.json({ ok: true });
   } catch (err) {

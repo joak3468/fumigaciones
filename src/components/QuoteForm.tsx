@@ -25,6 +25,8 @@ const schema = z.object({
   zona: z.string().min(3, "Indique su zona o barrio").max(100, "Máximo 100 caracteres"),
   tipo: z.enum(["Casa", "Departamento", "Comercio", "Empresa", "Industrial", "Otro"]),
   comentario: z.string().max(500, "Máximo 500 caracteres").optional(),
+  // honeypot: los usuarios nunca lo ven ni lo completan, los bots que auto-rellenan el HTML sí
+  website: z.string().optional(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -41,6 +43,7 @@ export default function QuoteForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "ok" | "error">("idle");
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0 });
+  const renderedAt = useRef(Date.now());
 
   const {
     register,
@@ -55,7 +58,7 @@ export default function QuoteForm() {
       const res = await fetch("/api/presupuesto", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, ts: renderedAt.current }),
       });
       if (res.ok) {
         setStatus("ok");
@@ -200,6 +203,17 @@ export default function QuoteForm() {
               </div>
             ) : (
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                {/* Honeypot anti-spam: oculto para usuarios reales, los bots que auto-rellenan formularios lo completan */}
+                <div className="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true">
+                  <label htmlFor="website">No completar este campo</label>
+                  <input
+                    {...register("website")}
+                    id="website"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">

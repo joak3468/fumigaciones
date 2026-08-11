@@ -58,7 +58,7 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm text-slate-500">
               <li>011 5563-7084</li>
-              <li>fumigacionesnorte.arg@gmail.com</li>
+              <li>contacto@fumigacionesnorte.com.ar</li>
               <li className="pt-1">Todos los días · 8:00 a 21:30 hs</li>
               <li className="pt-1">Capital Federal y Gran Buenos Aires</li>
             </ul>

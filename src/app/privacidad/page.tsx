@@ -21,7 +21,7 @@ export default function Privacidad() {
             <strong> fumigacionesnorte.com.ar</strong>.
           </p>
           <p className="text-slate-600 leading-relaxed mt-2">
-            Contacto: <a href="mailto:fumigacionesnorte.arg@gmail.com" className="text-green-700 hover:underline">fumigacionesnorte.arg@gmail.com</a>
+            Contacto: <a href="mailto:contacto@fumigacionesnorte.com.ar" className="text-green-700 hover:underline">contacto@fumigacionesnorte.com.ar</a>
           </p>
         </section>
 
@@ -86,8 +86,8 @@ export default function Privacidad() {
           </ul>
           <p className="text-slate-600 leading-relaxed mt-3">
             Para ejercer cualquiera de estos derechos, puede contactarnos en{" "}
-            <a href="mailto:fumigacionesnorte.arg@gmail.com" className="text-green-700 hover:underline">
-              fumigacionesnorte.arg@gmail.com
+            <a href="mailto:contacto@fumigacionesnorte.com.ar" className="text-green-700 hover:underline">
+              contacto@fumigacionesnorte.com.ar
             </a>.
             La DNPDP (Dirección Nacional de Protección de Datos Personales) es el organismo competente
             para recibir denuncias en caso de incumplimiento.

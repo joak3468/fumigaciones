@@ -15,13 +15,13 @@ import {
 const contactInfo = [
   {
     icon: Phone,
-    title: "Teléfonos",
-    lines: ["011 4702-7271", "011 5563-7084"],
+    title: "Teléfono",
+    lines: ["011 5563-7084"],
   },
   {
     icon: Mail,
     title: "Email",
-    lines: ["fumigacionesnorte.arg@gmail.com"],
+    lines: ["contacto@fumigacionesnorte.com.ar"],
   },
   {
     icon: Clock,
@@ -93,7 +93,7 @@ export default function Contact() {
           className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <a
-            href="https://www.facebook.com/Fumigaciones-Norte-1815119762033122"
+            href="https://www.facebook.com/FumigacionesNorteArgentina"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-200 text-slate-600 hover:border-blue-400 hover:text-blue-600 transition-colors text-sm font-medium"

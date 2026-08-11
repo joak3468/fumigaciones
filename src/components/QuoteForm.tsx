@@ -53,7 +53,7 @@ function buildWhatsAppMessage(data: FormData): string {
 type ContactLine = { text: string; href?: string };
 const contactItems: { icon: React.ElementType; label: string; lines: ContactLine[] }[] = [
   { icon: Phone, label: "Teléfono", lines: [{ text: "011 5563-7084", href: "tel:01155637084" }] },
-  { icon: Mail, label: "Email", lines: [{ text: "fumigacionesnorte.arg@gmail.com", href: "mailto:fumigacionesnorte.arg@gmail.com" }] },
+  { icon: Mail, label: "Email", lines: [{ text: "contacto@fumigacionesnorte.com.ar", href: "mailto:contacto@fumigacionesnorte.com.ar" }] },
   { icon: Clock, label: "Atención", lines: [{ text: "Todos los días" }, { text: "8:00 a 21:30 hs" }] },
   { icon: MapPin, label: "Cobertura", lines: [{ text: "Capital Federal" }, { text: "Gran Buenos Aires" }] },
 ];
@@ -99,6 +99,13 @@ export default function QuoteForm() {
     const valid = await trigger(["nombre", "email", "telefono", "plaga", "zona", "tipo", "comentario"]);
     if (!valid) return;
     const data = getValues();
+
+    // Mismo honeypot y time-trap que usa /api/presupuesto: sin esto, un bot que
+    // autocompleta el formulario visible se salteaba toda protección anti-spam
+    // porque este flujo nunca pasa por el servidor.
+    if (typeof data.website === "string" && data.website.trim() !== "") return;
+    if (Date.now() - renderedAt < 2500) return;
+
     const text = encodeURIComponent(buildWhatsAppMessage(data));
     gtmEvent("form_submit_whatsapp", { tipo: data.tipo, zona: data.zona });
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank", "noopener,noreferrer");
@@ -186,7 +193,7 @@ export default function QuoteForm() {
             {/* Social links */}
             <div className="flex gap-3 pt-1">
               <a
-                href="https://www.facebook.com/Fumigaciones-Norte-1815119762033122"
+                href="https://www.facebook.com/FumigacionesNorteArgentina"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => gtmEvent("social_click", { platform: "facebook" })}

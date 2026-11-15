@@ -9,7 +9,7 @@ export default function Hero() {
   return (
     <section
       id="inicio"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-20"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-green-950" />
 
